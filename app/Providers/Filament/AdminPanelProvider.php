@@ -29,7 +29,11 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Indigo,
+                'danger' => Color::Rose,
+                'info' => Color::Blue,
+                'warning' => Color::Orange,
+
             ])
             ->brandName('Blogging System')
             ->brandLogo(asset('images/blog.png'))

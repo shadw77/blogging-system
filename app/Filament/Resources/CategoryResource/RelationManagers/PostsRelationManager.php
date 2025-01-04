@@ -35,7 +35,8 @@ class PostsRelationManager extends RelationManager
                     ->relationship('author', 'name')
                     ->searchable(),
 
-                TagsInput::make('tags')->required(),
+                Select::make('tags')->multiple()->relationship('tags', 'name')->required(),
+
                 Select::make('status')
                     ->options([
                         'draft' => 'Draft',

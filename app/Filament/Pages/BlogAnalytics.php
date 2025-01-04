@@ -13,7 +13,7 @@ class BlogAnalytics extends Page
 {
     protected static ?string $title = 'Blog Analytics';
     protected static ?string $navigationLabel = 'Blog Analytics';
-    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+    protected static ?string $navigationIcon = 'heroicon-s-chart-bar';
     protected static ?int $navigationSort = 1;
 
     public $totalPosts;

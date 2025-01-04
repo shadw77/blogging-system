@@ -13,29 +13,29 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-folder';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name')->required()->minLength(1)
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(function(string $operation, string $state, Forms\Set $set) {
-                        if ($operation === 'edit') {
-                            return ;
-                        }
-                        $set('slug', Str::slug($state));
-                    }),
-                TextInput::make('slug')->required(),
+                TextInput::make('name')
+                    ->required()
+                    ->minLength(1)
+                    ->maxLength(255)
+                    ->unique(Category::class, 'name', ignorable: fn ($record) => $record)
+                    ->reactive()
+                    ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
+                
+                TextInput::make('slug')
+                    ->required()
+                    ->unique(Category::class, 'slug', ignorable: fn ($record) => $record),
             ]);
     }
 
@@ -43,8 +43,13 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
+                TextColumn::make('name')
+                    ->sortable()
+                    ->searchable(),
+
                 TextColumn::make('slug')
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //
@@ -63,7 +68,7 @@ class CategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            PostsRelationManager::class
+            PostsRelationManager::class,
         ];
     }
 

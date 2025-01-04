@@ -11,8 +11,8 @@ class StatisticsWidget extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('New Users', User::count())
-                ->icon('heroicon-m-users')
+            Stat::make('Users', User::count())
+                ->icon('heroicon-s-user-group')
         ];
     }
 }
