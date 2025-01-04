@@ -10,7 +10,11 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'slug', 'content', 'published_at', 'status', 'author_id'
+        'title', 'slug', 'content', 'published_at', 'status', 'author_id', 'category_id'
+    ];
+
+    protected $casts = [
+        'tags' => 'array',
     ];
 
     public function category()
@@ -20,11 +24,17 @@ class Post extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class, 'post_tag');
     }
 
     public function comments()
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }
