@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Resources\PostResource\RelationManagers;
 use App\Filament\Resources\PostResource\RelationManagers\TagsRelationManager;
+use App\Filament\Resources\PostResource\RelationManagers\CommentsRelationManager;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Category;
@@ -13,6 +14,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Tables\Filter\Filter;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Select;
@@ -98,6 +100,10 @@ class PostResource extends Resource
                     'published' => 'Published',
                     'archived' => 'Archived',
                 ]),
+                Tables\Filters\SelectFilter::make('category_id')
+                    ->label('Category')
+                    ->relationship('category', 'name')
+                    ->multiple()
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -113,7 +119,8 @@ class PostResource extends Resource
     public static function getRelations(): array
     {
         return [
-            TagsRelationManager::class
+            TagsRelationManager::class,
+            CommentsRelationManager::class
         ];
     }
 
