@@ -17,5 +17,6 @@ git clone <repository-url>
 cd <project-directory>
 composer install
 cp .env.example .env
+php artisan db:seed
 php artisan queue:work
 php artisan serve
