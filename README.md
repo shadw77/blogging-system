@@ -12,10 +12,6 @@ Make sure you have the following installed:
 
 ## Setup Instructions
 
-### Step 1: Clone the Repository
-
-If you haven’t cloned the project yet, run the following command:
-
 ```bash
 git clone <repository-url>
 cd <project-directory>
