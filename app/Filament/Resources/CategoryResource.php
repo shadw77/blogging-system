@@ -14,6 +14,7 @@ use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Str;
+use Filament\Forms\Components\Section;
 
 class CategoryResource extends Resource
 {
@@ -25,17 +26,19 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->required()
-                    ->minLength(1)
-                    ->maxLength(255)
-                    ->unique(Category::class, 'name', ignorable: fn ($record) => $record)
-                    ->reactive()
-                    ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
-                
-                TextInput::make('slug')
-                    ->required()
-                    ->unique(Category::class, 'slug', ignorable: fn ($record) => $record),
+                Section::make('Create category')->schema([
+                    TextInput::make('name')
+                        ->required()
+                        ->minLength(1)
+                        ->maxLength(255)
+                        ->unique(Category::class, 'name', ignorable: fn ($record) => $record)
+                        ->reactive()
+                        ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
+                    
+                    TextInput::make('slug')
+                        ->required()
+                        ->unique(Category::class, 'slug', ignorable: fn ($record) => $record),
+                ]),
             ]);
     }
 

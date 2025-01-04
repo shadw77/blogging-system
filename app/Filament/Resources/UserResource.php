@@ -14,6 +14,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Section;
 
 class UserResource extends Resource
 {
@@ -25,9 +26,11 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')->required(),
-                TextInput::make('email')->email(),
-                TextInput::make('password')->password()->visibleOn('create')
+                Section::make('Create user')->schema([
+                    TextInput::make('name')->required(),
+                    TextInput::make('email')->email(),
+                    TextInput::make('password')->password()->visibleOn('create')
+                ]),
             ]);
     }
 
