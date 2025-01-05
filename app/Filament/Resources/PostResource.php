@@ -42,7 +42,8 @@ class PostResource extends Resource
                     Select::make('category_id')
                         ->label('Category')
                         ->relationship('category', 'name')
-                        ->searchable(),
+                        ->searchable()
+                        ->required(),
 
                     Select::make('tags')->multiple()->relationship('tags', 'name')->required(),
                     Select::make('status')
