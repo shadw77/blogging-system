@@ -20,6 +20,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Actions\BulkAction;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 
 class PostResource extends Resource
 {
@@ -32,8 +33,11 @@ class PostResource extends Resource
         return $form
             ->schema([
                 Section::make('Create a post')->schema([
-                    TextInput::make('title')->required(),
-                    TextInput::make('slug')->unique(ignoreRecord:true)->required(),
+                    TextInput::make('title')->required()
+                        ->unique(ignorable: fn ($record) => $record)
+                        ->reactive()
+                        ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
+                    TextInput::make('slug')->unique(ignorable: fn ($record) => $record)->required(),
                     MarkdownEditor::make('content')->required()->columnSpan('full'),
                     Select::make('author_id')->required()
                         ->label('Author')

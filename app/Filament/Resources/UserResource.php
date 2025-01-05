@@ -28,8 +28,8 @@ class UserResource extends Resource
             ->schema([
                 Section::make('Create user')->schema([
                     TextInput::make('name')->required(),
-                    TextInput::make('email')->email(),
-                    TextInput::make('password')->password()->visibleOn('create')
+                    TextInput::make('email')->email()->required(),
+                    TextInput::make('password')->password()->required()->visibleOn('create')
                 ]),
             ]);
     }
